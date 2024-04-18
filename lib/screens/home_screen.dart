@@ -7,13 +7,13 @@ import 'package:musicplayer_app/widgets/section_header.dart';
 import 'package:musicplayer_app/widgets/song_card.dart';
 import '../models/playlist_model.dart';
 import 'package:musicplayer_app/models/song_models.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    SongController songController = Get.put(SongController());
     // List<Song> songs = Song.songs;
     // List<Playlist> playlists = Playlist.playlists;
 
@@ -29,66 +29,58 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: const _CustomAppBar(),
-        bottomNavigationBar: const _CustomNavBar(),
-        body: GetBuilder<SongController>(
-          init: SongController(),
-          builder: (controller) {
-            if (controller.isLoading.isTrue) {
-              return Center(child: CircularProgressIndicator());
-            }
-            return GridView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // Mengatur jumlah kolom dalam grid
-                mainAxisSpacing: 10, // Spasi vertikal antara item
-                crossAxisSpacing: 0, // Spasi horizontal antara item
-                childAspectRatio: 1, // Rasio lebar-tinggi setiap item
-              ),
-              itemCount: controller.songs.length,
-              itemBuilder: (context, index) {
-                var song = controller.songs[index];
-                return SongCard(
-                  song: song,
-                );
-              },
-            );
-          },
-        ),
-        // body: SingleChildScrollView(
-        //   child: Column(
-        //     children: [
-        //       const _DiscoverMusic(),
-        //       GetBuilder<SongController>(
-        //         init: SongController(),
-        //         builder: (controller) {
-        //           if (controller.isLoading.value) {
-        //             return Center(child: CircularProgressIndicator());
-        //           }
-        //           return GridView.builder(
-        //             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        //               crossAxisCount: 2, // Mengatur jumlah kolom dalam grid
-        //               mainAxisSpacing: 8.0, // Spasi vertikal antara item
-        //               crossAxisSpacing: 8.0, // Spasi horizontal antara item
-        //               childAspectRatio: 0.7, // Rasio lebar-tinggi setiap item
-        //             ),
-        //             itemCount: controller.songs.length,
-        //             itemBuilder: (context, index) {
-        //               var song = controller.songs[index];
-        //               return SongCard(
-        //                 song: song,
-        //               );
-        //             },
-        //           );
-        //         },
-        //       ),
-        //       // _TrendingMusic(songs: songs),
-        //       // _PlaylistMusic(playlists: playlists),
-        //     ],
-        //   ),
-        // ),
-      ),
+          backgroundColor: Colors.transparent,
+          appBar: const _CustomAppBar(),
+          bottomNavigationBar: const _CustomNavBar(),
+          body: Obx(() => songController.isLoading.isTrue
+              ? Center(child: CircularProgressIndicator())
+              : GridView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 1,
+                  ),
+                  itemCount: songController.songs.length,
+                  itemBuilder: (context, index) {
+                    var song = songController.songs[index];
+                    return SongCard(
+                      song: song,
+                    );
+                  },
+                ))),
+      // body: SingleChildScrollView(
+      //   child: Column(
+      //     children: [
+      //       const _DiscoverMusic(),
+      //       GetBuilder<SongController>(
+      //         init: SongController(),
+      //         builder: (controller) {
+      //           if (controller.isLoading.value) {
+      //             return Center(child: CircularProgressIndicator());
+      //           }
+      //           return GridView.builder(
+      //             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      //               crossAxisCount: 2, // Mengatur jumlah kolom dalam grid
+      //               mainAxisSpacing: 8.0, // Spasi vertikal antara item
+      //               crossAxisSpacing: 8.0, // Spasi horizontal antara item
+      //               childAspectRatio: 0.7, // Rasio lebar-tinggi setiap item
+      //             ),
+      //             itemCount: controller.songs.length,
+      //             itemBuilder: (context, index) {
+      //               var song = controller.songs[index];
+      //               return SongCard(
+      //                 song: song,
+      //               );
+      //             },
+      //           );
+      //         },
+      //       ),
+      //       // _TrendingMusic(songs: songs),
+      //       // _PlaylistMusic(playlists: playlists),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }

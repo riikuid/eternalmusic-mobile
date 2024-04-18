@@ -24,27 +24,3 @@ class SongController extends GetxController {
     }
   }
 }
-// import 'package:get/get.dart';
-
-// class SongController extends GetxController {
-//   var songs = <Song>[].obs;
-//   var isLoading = true.obs;
-
-//   @override
-//   void onInit() {
-//     fetchSongs();
-//     super.onInit();
-//   }
-
-//   void fetchSongs() async {
-//     try {
-//       var fetchedSongs = await SongService().fetchSongs();
-//       if (fetchedSongs.isNotEmpty) {
-//         songs.assignAll(fetchedSongs);
-//       }
-//     } finally {
-//       isLoading(false);
-//     }
-//   }
-// }
-

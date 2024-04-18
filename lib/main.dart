@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:musicplayer_app/screens/home_screen.dart';
 import 'package:musicplayer_app/screens/playlist_screen.dart';
 import 'package:musicplayer_app/screens/song_screen.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() {
   runApp(const MyApp());
